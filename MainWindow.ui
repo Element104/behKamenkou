@@ -46,7 +46,7 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Konec</string>
+          <string>Konec zavodu</string>
          </property>
         </widget>
        </item>
@@ -199,11 +199,6 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionP">
-   <property name="text">
-    <string>p</string>
-   </property>
-  </action>
   <action name="actionT">
    <property name="text">
     <string>t</string>

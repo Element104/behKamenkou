@@ -6,15 +6,20 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network
 
 TARGET = element104
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        MainWindow.cpp
+        MainWindow.cpp \
+    APIcko.cpp
 
-HEADERS  += MainWindow.h
+HEADERS  += MainWindow.h \
+    APIcko.h
 
 FORMS    += MainWindow.ui
+
+LIBS += -lQHttpEngine
+

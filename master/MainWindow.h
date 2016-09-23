@@ -37,6 +37,7 @@ private:
   QTime _cas_zacatek;
   QTime _cas_relativni;
   QStandardItemModel *_model;
+  int _posledni_casovy_index = -1;
   APIcko _apicko;
   QFilesystemHandler _server_fshandler;
   QHttpServer _server;

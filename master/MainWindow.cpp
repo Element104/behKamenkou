@@ -74,9 +74,18 @@ void MainWindow::on_tlacitko_stopni_to_pressed()
 {
   QTime cas = QTime(0, 0).addMSecs(_cas_zacatek.elapsed());
   _cas_relativni.restart();
+
   auto item = new QStandardItem();
   item->setText(cas.toString("HH:mm:ss.zzz"));
   item->setData(cas);
-  _model->appendRow(item);
+
+  if ((_posledni_casovy_index + 1) < _model->rowCount()) {
+    _model->setItem(_posledni_casovy_index + 1, 0, item);
+  }
+  else {
+    _model->appendRow(item);
+  }
+  _posledni_casovy_index++;
+
   ui->tabulkohled->scrollToBottom();
 }

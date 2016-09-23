@@ -26,10 +26,14 @@ private slots:
   void on_tlacitko_start_clicked();
   void on_tlacitko_tak_to_ukoncime_clicked();
   void tik_tak();
-
   void on_zvladam_cist_popisky_toggled(bool checked);
-
   void on_tlacitko_stopni_to_pressed();
+
+  void uloz();
+  void nahraj();
+  void uloz_jako_csv();
+
+  void on_tlacitko_vyexportuj_to_clicked();
 
 private:
   Ui::MainWindow *ui;

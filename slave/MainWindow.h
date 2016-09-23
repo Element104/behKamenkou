@@ -22,16 +22,14 @@ public:
 private slots:
   void on_actionT_triggered();
   void tik_tak();
-
   void on_policko_cislo_returnPressed();
-
   void on_tlacitko_synchronizovat_clicked();
+  void on_zmena_tabulky(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 
 private:
   Ui::MainWindow *ui;
   QTimer _casovac_sekunda_po_sekunde;
   QTime _cas_zacatek;
-  QTime _cas_relativni;
   QStandardItemModel *_model;
   APIcko _apicko;
 };

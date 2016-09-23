@@ -69,21 +69,6 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="casoukazovac_relativni">
-         <property name="font">
-          <font>
-           <family>DejaVu Sans Mono</family>
-          </font>
-         </property>
-         <property name="text">
-          <string>00:00:00</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="0" colspan="4">
         <widget class="QTableView" name="tabulkohled">
          <property name="enabled">

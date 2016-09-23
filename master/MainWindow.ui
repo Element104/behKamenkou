@@ -60,31 +60,6 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1" colspan="3">
-        <widget class="QTableView" name="tabulkohled">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="3">
-        <widget class="QPushButton" name="tlacitko_stopni_to">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="text">
-          <string>Nekdo probehl cilem</string>
-         </property>
-        </widget>
-       </item>
        <item row="6" column="1">
         <spacer name="horizontalSpacer">
          <property name="orientation">
@@ -129,6 +104,38 @@
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QPushButton" name="tlacitko_vyexportuj_to">
+         <property name="text">
+          <string>Vyexportuj to</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="4">
+        <widget class="QTableView" name="tabulkohled">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="4">
+        <widget class="QPushButton" name="tlacitko_stopni_to">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Nekdo probehl cilem</string>
          </property>
         </widget>
        </item>

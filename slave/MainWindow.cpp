@@ -6,12 +6,13 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-//  ui->obalovac->setEnabled(false);
   _casovac_sekunda_po_sekunde.setInterval(1000);
   connect(&_casovac_sekunda_po_sekunde, SIGNAL(timeout()),
           this, SLOT(tik_tak()));
   _model = nullptr;
   _model = new QStandardItemModel();
+  connect(_model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)),
+          this, SLOT(on_zmena_tabulky(QModelIndex,QModelIndex)));
   ui->tabulkohled->setModel(_model);
 }
 
@@ -31,10 +32,8 @@ void MainWindow::on_actionT_triggered()
 void MainWindow::tik_tak()
 {
   QTime cas_od_zacatku = QTime(0, 0).addMSecs(_cas_zacatek.elapsed());
-  QTime cas_relativni = QTime(0, 0).addMSecs(_cas_relativni.elapsed());
 
   ui->casoukazovac_celkovy->setText(cas_od_zacatku.toString("HH:mm:ss"));
-  ui->casoukazovac_relativni->setText(cas_relativni.toString("HH:mm:ss"));
 }
 
 void MainWindow::on_policko_cislo_returnPressed()
@@ -55,5 +54,19 @@ void MainWindow::on_policko_cislo_returnPressed()
 
 void MainWindow::on_tlacitko_synchronizovat_clicked()
 {
+  _apicko.setURL(QUrl());
+  _model->clear();
   _apicko.setURL(QUrl(QString("http://%1/api").arg(ui->policko_server->text())));
+  for (auto cislo : _apicko.vylistujCisla()) {
+      QStandardItem* item = new QStandardItem(QString("%1").arg(cislo));
+      item->setData(cislo);
+      _model->appendRow(item);
+  }
+}
+
+void MainWindow::on_zmena_tabulky(const QModelIndex& topLeft, const QModelIndex& bottomRight)
+{
+  for (int r = topLeft.row(); r <= bottomRight.row(); ++r) {
+    _apicko.zmenCislo(r, _model->data(_model->index(r, 0)).toInt());
+  }
 }

@@ -104,7 +104,7 @@ void MainWindow::on_tlacitko_stopni_to_pressed()
 
 void MainWindow::uloz()
 {
-  QFile file("tabulka.csv");
+  QFile file("tabulka.bin");
   if (file.open(QIODevice::WriteOnly)) {
     QDataStream stream(&file);
 
@@ -125,14 +125,14 @@ void MainWindow::uloz()
       }
     }
     file.flush();
-    file.copy(QString("tabulka-%1").arg(QDateTime::currentDateTime().toString(Qt::ISODate)));
+    file.copy(QString("tabulka-%1.bin").arg(QDateTime::currentDateTime().toString(Qt::ISODate)));
     file.close();
   }
 }
 
 void MainWindow::nahraj()
 {
-  QFile file("tabulka.csv");
+  QFile file("tabulka.bin");
   if (file.open(QIODevice::ReadOnly)) {
     QDataStream stream(&file);
 
@@ -166,7 +166,23 @@ void MainWindow::nahraj()
 
 void MainWindow::uloz_jako_csv()
 {
+  QFile file("tabulka.csv");
+  if (file.open(QIODevice::WriteOnly)) {
+    QTextStream stream(&file);
 
+    for (int i = 0; i < _model->rowCount(); ++i) {
+      for (int j = 0; j < _model->columnCount(); ++j) {
+        if (!_model->item(i, j)) {
+          _model->setItem(i, j, new QStandardItem(""));
+        }
+        stream << _model->item(i, j)->text();
+        stream << ",";
+      }
+      stream << "\n";
+    }
+    file.flush();
+    file.close();
+  }
 }
 
 void MainWindow::on_tlacitko_vyexportuj_to_clicked()

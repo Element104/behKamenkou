@@ -3,7 +3,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
-  ui(new Ui::MainWindow)
+  ui(new Ui::MainWindow),
+  _apicko(*this)
 {
   ui->setupUi(this);
   _casovac_sekunda_po_sekunde.setInterval(1000);
@@ -69,4 +70,9 @@ void MainWindow::on_zmena_tabulky(const QModelIndex& topLeft, const QModelIndex&
   for (int r = topLeft.row(); r <= bottomRight.row(); ++r) {
     _apicko.zmenCislo(r, _model->data(_model->index(r, 0)).toInt());
   }
+}
+
+void MainWindow::napis_status(const QString &status)
+{
+    ui->statusBar->showMessage(status);
 }

@@ -19,6 +19,9 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
 
+public slots:
+   void napis_status(const QString& status);
+
 private slots:
   void on_actionT_triggered();
   void tik_tak();

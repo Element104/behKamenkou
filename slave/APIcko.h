@@ -7,11 +7,13 @@
 #include <QUrl>
 #include <QNetworkAccessManager>
 
+class MainWindow;
 class APIcko : public QObjectHandler
 {
   Q_OBJECT
 public:
-  APIcko(const QUrl& api_url = QUrl())
+  APIcko(MainWindow& main, const QUrl& api_url = QUrl())
+      : _mainwindow(main)
   {
     setURL(api_url);
   }
@@ -33,6 +35,7 @@ private:
 
   QVariantMap call(const QString& metoda, const QVariantMap& parametry);
 
+  MainWindow& _mainwindow;
   QNetworkAccessManager _manager;
   QUrl _url;
 };

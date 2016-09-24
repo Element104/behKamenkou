@@ -8,6 +8,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QHttpMultiPart>
+#include "MainWindow.h"
 
 QList<int> APIcko::vylistujCisla()
 {
@@ -49,6 +50,13 @@ QVariantMap APIcko::call(const QString &metoda, const QVariantMap &parametry)
   QEventLoop loop;
   connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
   loop.exec();
+
+  if (reply->error() == QNetworkReply::NoError) {
+     _mainwindow.napis_status("Je to spojene, uz to nemackej!");
+  }
+  else {
+     _mainwindow.napis_status(QString("CHYBA: %1").arg(reply->errorString()));
+  }
 
   const QJsonDocument reply_json = QJsonDocument::fromJson(reply->readAll());
   return reply_json.object().toVariantMap();

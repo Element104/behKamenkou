@@ -89,9 +89,10 @@ void MainWindow::tik_tak()
               "<body>"
               "<center>"
               "<p>"
-              "<span style=\"font-size: large; font-weight: bold;\">%1</span>"
-              "</p>").arg(cas_od_zacatku.toString());
+              "<span style=\"font-size: 100px; font-weight: bold; position: relative; top: 100px;\">%1</span>"
+              "</p>").arg(cas_od_zacatku.toString("   HH  :  mm  :  ss  "));
 
+     stream << "<span style=\"font-weight: bold; position: relative; top: 100px;\">";
      stream << "<table border=\"1\" cellpadding=\"5\">";
      stream << "<tr>";
      stream << "<th>Pozice</th>";
@@ -110,6 +111,7 @@ void MainWindow::tik_tak()
        stream << "</tr>";
      }
      stream << "</table>";
+     stream << "</span>";
      stream << \
               "</center>"
               "</body>"

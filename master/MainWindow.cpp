@@ -6,7 +6,7 @@
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow),
-  _server_fshandler(":/static"),
+  _server_fshandler("./"),
   _server(&_server_fshandler)
 {
   ui->setupUi(this);
@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
           this, SLOT(tik_tak()));
   _model = nullptr;
   _server_fshandler.addSubHandler(QRegExp("api/"), &_apicko);
+  _server_fshandler.addRedirect(QRegExp("^$"), "index.html");
   _server.listen(QHostAddress::Any, 1234);
 }
 
@@ -36,7 +37,7 @@ void MainWindow::on_tlacitko_start_clicked()
 {
   ui->obalovac->setEnabled(true);
   ui->tlacitko_start->setEnabled(false);
-  ui->tlacitko_tak_to_ukoncime->setEnabled(true);
+  ui->tlacitko_tak_to_ukoncime->setEnabled(false);
   ui->zvladam_cist_popisky->setChecked(false);
 
   _casovac_sekunda_po_sekunde.start();
@@ -60,11 +61,13 @@ void MainWindow::on_tlacitko_start_clicked()
 
 void MainWindow::on_tlacitko_tak_to_ukoncime_clicked()
 {
-  _casovac_sekunda_po_sekunde.stop();
-  ui->obalovac->setEnabled(false);
-  ui->tlacitko_start->setEnabled(true);
-  _casovac_sekunda_po_sekunde.stop();
-  ui->zvladam_cist_popisky->setChecked(false);
+  if (ui->zvladam_cist_popisky->isChecked()) {
+    _casovac_sekunda_po_sekunde.stop();
+    ui->obalovac->setEnabled(false);
+    ui->tlacitko_start->setEnabled(true);
+    ui->zvladam_cist_popisky->setChecked(false);
+    ui->tlacitko_tak_to_ukoncime->setEnabled(false);
+  }
 }
 
 void MainWindow::tik_tak()
@@ -74,6 +77,45 @@ void MainWindow::tik_tak()
 
   ui->casoukazovac_celkovy->setText(cas_od_zacatku.toString("HH:mm:ss"));
   ui->casoukazovac_relativni->setText(cas_relativni.toString("HH:mm:ss"));
+
+  QFile index("index.html");
+  if (index.open(QIODevice::WriteOnly)) {
+    QTextStream stream(&index);
+    stream << \
+      QString("<html>"
+              "<head>"
+              "<meta http-equiv=\"refresh\" content=\"1\">"
+              "</head>"
+              "<body>"
+              "<center>"
+              "<p>"
+              "<span style=\"font-size: large; font-weight: bold;\">%1</span>"
+              "</p>").arg(cas_od_zacatku.toString());
+
+     stream << "<table border=\"1\" cellpadding=\"5\">";
+     stream << "<tr>";
+     stream << "<th>Pozice</th>";
+     stream << "<th>Cas</th>";
+     stream << "<th>Bachuv identifikator</th>";
+     stream << "</tr>";
+     for (int r = _model->rowCount(), c = 0; r > 1 && c < 10; --r, ++c) {
+       if (!_model->item(r - 1, 0) || !_model->item(r - 1, 1)) {
+          ++c;
+       }
+       stream << "<tr>";
+       stream << QString("<td align=\"center\">%1</td><td align=\"center\">%2</td><td align=\"center\">%3</td>")
+                 .arg(r)
+                 .arg(_model->item(r - 1, 0)->text())
+                 .arg(_model->item(r - 1, 1)->text());
+       stream << "</tr>";
+     }
+     stream << "</table>";
+     stream << \
+              "</center>"
+              "</body>"
+              "</html>";
+    index.close();
+  }
 }
 
 void MainWindow::on_zvladam_cist_popisky_toggled(bool checked)

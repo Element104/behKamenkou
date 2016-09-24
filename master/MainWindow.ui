@@ -28,7 +28,27 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0" colspan="3">
+    <item row="3" column="0">
+     <widget class="QPushButton" name="tlacitko_vyexportuj_to">
+      <property name="text">
+       <string>Vyexportuj to</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="0" colspan="2">
      <widget class="QWidget" name="obalovac" native="true">
       <property name="enabled">
        <bool>true</bool>
@@ -107,20 +127,6 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="QPushButton" name="tlacitko_vyexportuj_to">
-         <property name="text">
-          <string>Vyexportuj to</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="4">
-        <widget class="QTableView" name="tabulkohled">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0" colspan="4">
         <widget class="QPushButton" name="tlacitko_stopni_to">
          <property name="enabled">
@@ -136,6 +142,13 @@
          </property>
          <property name="text">
           <string>Nekdo probehl cilem</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="4">
+        <widget class="QTableView" name="tabulkohled">
+         <property name="enabled">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

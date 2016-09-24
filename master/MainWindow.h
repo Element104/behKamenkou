@@ -7,6 +7,7 @@
 #include <QStandardItemModel>
 #include <QHttpEngine/QHttpServer>
 #include <QHttpEngine/QFilesystemHandler>
+#include <QResource>
 #include "APIcko.h"
 
 namespace Ui {
@@ -45,6 +46,7 @@ private:
   APIcko _apicko;
   QFilesystemHandler _server_fshandler;
   QHttpServer _server;
+  QResource _html;
 };
 
 #endif // MAINWINDOW_H

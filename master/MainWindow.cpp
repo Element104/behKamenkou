@@ -215,12 +215,14 @@ void MainWindow::uloz_jako_csv()
     QTextStream stream(&file);
 
     for (int i = 0; i < _model->rowCount(); ++i) {
+      stream << QString("%1").arg(i + 1);
+      stream << ";";
       for (int j = 0; j < _model->columnCount(); ++j) {
         if (!_model->item(i, j)) {
           _model->setItem(i, j, new QStandardItem(""));
         }
         stream << _model->item(i, j)->text();
-        stream << ",";
+        stream << ";";
       }
       stream << "\n";
     }

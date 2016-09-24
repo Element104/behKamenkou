@@ -41,8 +41,8 @@ void MainWindow::on_tlacitko_start_clicked()
   ui->zvladam_cist_popisky->setChecked(false);
 
   _casovac_sekunda_po_sekunde.start();
-  _cas_zacatek.start();
-  _cas_relativni.start();
+  _cas_zacatek = QDateTime::currentDateTime();
+  _cas_relativni = QDateTime::currentDateTime();
 
   if (_model) {
     delete _model;
@@ -72,8 +72,8 @@ void MainWindow::on_tlacitko_tak_to_ukoncime_clicked()
 
 void MainWindow::tik_tak()
 {
-  QTime cas_od_zacatku = QTime(0, 0).addMSecs(_cas_zacatek.elapsed());
-  QTime cas_relativni = QTime(0, 0).addMSecs(_cas_relativni.elapsed());
+  QTime cas_od_zacatku = QTime(0,0).addMSecs(QDateTime::currentMSecsSinceEpoch() - _cas_zacatek.toMSecsSinceEpoch());
+  QTime cas_relativni = QTime(0,0).addMSecs(QDateTime::currentMSecsSinceEpoch() - _cas_relativni.toMSecsSinceEpoch());
 
   ui->casoukazovac_celkovy->setText(cas_od_zacatku.toString("HH:mm:ss"));
   ui->casoukazovac_relativni->setText(cas_relativni.toString("HH:mm:ss"));
@@ -99,7 +99,7 @@ void MainWindow::tik_tak()
      stream << "<th>Cas</th>";
      stream << "<th>Bachuv identifikator</th>";
      stream << "</tr>";
-     for (int r = _model->rowCount(), c = 0; r > 1 && c < 10; --r, ++c) {
+     for (int r = _model->rowCount(), c = 0; r > 0 && c < 10; --r, ++c) {
        if (!_model->item(r - 1, 0) || !_model->item(r - 1, 1)) {
           ++c;
        }
@@ -127,8 +127,8 @@ void MainWindow::on_zvladam_cist_popisky_toggled(bool checked)
 
 void MainWindow::on_tlacitko_stopni_to_pressed()
 {
-  QTime cas = QTime(0, 0).addMSecs(_cas_zacatek.elapsed());
-  _cas_relativni.restart();
+  QTime cas = QTime(0,0).addMSecs(QDateTime::currentMSecsSinceEpoch() - _cas_zacatek.toMSecsSinceEpoch());
+  _cas_relativni = QDateTime::currentDateTime();
 
   auto item = new QStandardItem();
   item->setText(cas.toString("HH:mm:ss.zzz"));
@@ -152,8 +152,8 @@ void MainWindow::uloz()
   if (file.open(QIODevice::WriteOnly)) {
     QDataStream stream(&file);
 
-    stream << _cas_zacatek.elapsed();
-    stream << _cas_relativni.elapsed();
+    stream << _cas_zacatek.toMSecsSinceEpoch();
+    stream << _cas_relativni.toMSecsSinceEpoch();
 
     qint32 n = _model->rowCount();
     qint32 m = _model->columnCount();
@@ -180,16 +180,14 @@ void MainWindow::nahraj()
   if (file.open(QIODevice::ReadOnly)) {
     QDataStream stream(&file);
 
-    int cas_zacatek;
-    int cas_relativni;
+    qint64 cas_zacatek;
+    qint64 cas_relativni;
 
     stream >> cas_zacatek;
     stream >> cas_relativni;
 
-    _cas_zacatek.start();
-    _cas_relativni.start();
-    _cas_zacatek = _cas_zacatek.addMSecs(-cas_zacatek);
-    _cas_relativni = _cas_relativni.addMSecs(-cas_relativni);
+    _cas_zacatek.setMSecsSinceEpoch(cas_zacatek);
+    _cas_relativni.setMSecsSinceEpoch(cas_relativni);
 
     qint32 n, m, t;
     stream >> n >> m >> t;

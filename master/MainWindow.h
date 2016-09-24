@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include <QTime>
+#include <QDateTime>
 #include <QStandardItemModel>
 #include <QHttpEngine/QHttpServer>
 #include <QHttpEngine/QFilesystemHandler>
@@ -39,8 +39,8 @@ private slots:
 private:
   Ui::MainWindow *ui;
   QTimer _casovac_sekunda_po_sekunde;
-  QTime _cas_zacatek;
-  QTime _cas_relativni;
+  QDateTime _cas_zacatek;
+  QDateTime _cas_relativni;
   QStandardItemModel *_model;
   int _posledni_casovy_index = -1;
   APIcko _apicko;

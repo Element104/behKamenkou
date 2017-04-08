@@ -84,13 +84,16 @@ void MainWindow::tik_tak()
     stream << \
       QString("<html>"
               "<head>"
-              "<meta http-equiv=\"refresh\" content=\"1\">"
+	      "<script>lapTime = %1; </script>"
+	      "<script src=\"index.js\"></script>"
+              "<meta http-equiv=\"refresh\" content=\"60\">"
               "</head>"
-              "<body>"
+              "<body onload=\"lapTime = %1; show(); start(%1);\">"
               "<center>"
+	      // "<div>Time: <span id=\"time\"></span></div>"
               "<p>"
-              "<span style=\"font-size: 100px; font-weight: bold; position: relative; top: 100px;\">%1</span>"
-              "</p>").arg(cas_od_zacatku.toString("   HH  :  mm  :  ss  "));
+              "<span id=\"time\" style=\"font-size: 100px; font-weight: bold; position: relative; top: 100px;\">%1</span>"
+              "</p>").arg(QTime(0,0).msecsTo(cas_od_zacatku));
 
      stream << "<span style=\"font-weight: bold; position: relative; top: 100px;\">";
      stream << "<table border=\"1\" cellpadding=\"5\">";

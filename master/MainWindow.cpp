@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
   ui->obalovac->setEnabled(false);
-  _casovac_sekunda_po_sekunde.setInterval(1000);
+  _casovac_sekunda_po_sekunde.setInterval(5000);
   connect(&_casovac_sekunda_po_sekunde, SIGNAL(timeout()),
           this, SLOT(tik_tak()));
   _model = nullptr;
@@ -86,7 +86,7 @@ void MainWindow::tik_tak()
               "<head>"
 	      "<script>lapTime = %1; </script>"
 	      "<script src=\"index.js\"></script>"
-              "<meta http-equiv=\"refresh\" content=\"60\">"
+              "<meta http-equiv=\"refresh\" content=\"5\">"
               "</head>"
               "<body onload=\"lapTime = %1; show(); start(%1);\">"
               "<center>"

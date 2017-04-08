@@ -102,7 +102,7 @@ void MainWindow::tik_tak()
      stream << "<th>Cas</th>";
      stream << "<th>Bachuv identifikator</th>";
      stream << "</tr>";
-     for (int r = _model->rowCount(), c = 0; r > 0; --r, ++c) {
+     for (int r = _model->rowCount(), c = 0; r > 0 && c < 10; --r, ++c) {
        if (!_model->item(r - 1, 0) || !_model->item(r - 1, 1)) {
           ++c;
        }

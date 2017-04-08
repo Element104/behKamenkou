@@ -16,8 +16,7 @@ for radek_vysledky in vysledky:
             vysledek_ucastnik = vysledek + ucastnik
             # print(vysledek_ucastnik)
             celkove.append(vysledek_ucastnik)
-            registrace.seek(0)
-            break
+    registrace.seek(0)
 
 registrace.close()
 vysledky.close()

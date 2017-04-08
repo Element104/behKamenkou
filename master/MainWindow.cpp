@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
   ui->obalovac->setEnabled(false);
-  _casovac_sekunda_po_sekunde.setInterval(5000);
+  _casovac_sekunda_po_sekunde.setInterval(1000);
   connect(&_casovac_sekunda_po_sekunde, SIGNAL(timeout()),
           this, SLOT(tik_tak()));
   _model = nullptr;

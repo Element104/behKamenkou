@@ -121,6 +121,47 @@ void MainWindow::tik_tak()
               "</html>";
     index.close();
   }
+
+  QFile vysledky("vysledky.html");
+  if (vysledky.open(QIODevice::WriteOnly)) {
+    QTextStream stream(&vysledky);
+    stream << \
+      QString("<html>"
+              "<head>"
+	      "<script>lapTime = %1; </script>"
+	      "<script src=\"index.js\"></script>"
+              "<meta http-equiv=\"refresh\" content=\"120\">"
+              "</head>"
+              "<body onload=\"lapTime = %1; show(); start(%1);\">"
+              "<center>"
+	      // "<div>Time: <span id=\"time\"></span></div>"
+              "<p>"
+              "<span id=\"time\" style=\"font-size: 100px; font-weight: bold; position: relative; top: 100px;\">%1</span>"
+              "</p>").arg(QTime(0,0).msecsTo(cas_od_zacatku));
+
+     stream << "<span style=\"font-weight: bold; position: relative; top: 100px;\">";
+     stream << "<table border=\"1\" cellpadding=\"5\">";
+     stream << "<tr>";
+     stream << "<th>Pozice</th>";
+     stream << "<th>Cas</th>";
+     stream << "<th>Bachuv identifikator</th>";
+     stream << "</tr>";
+     for (int r = _model->rowCount(); r > 0; --r) {
+       stream << "<tr>";
+       stream << QString("<td align=\"center\">%1</td><td align=\"center\">%2</td><td align=\"center\">%3</td>")
+                 .arg(r)
+                 .arg(_model->item(r - 1, 0)->text())
+                 .arg(_model->item(r - 1, 1)->text());
+       stream << "</tr>";
+     }
+     stream << "</table>";
+     stream << "</span>";
+     stream << \
+              "</center>"
+              "</body>"
+              "</html>";
+    vysledky.close();
+  }
 }
 
 void MainWindow::on_zvladam_cist_popisky_toggled(bool checked)

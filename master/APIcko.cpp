@@ -13,7 +13,13 @@ QVariantMap APIcko::vylistujCisla(const QVariantMap &parametry)
     const int pocet_radku = model().rowCount();
 
     for (int r = 0; r < pocet_radku; ++r) {
-      cisla.append(model().data(model().index(r, 1)).toInt());
+      auto model_index = model().index(r, 1);
+      int cislo = model().data(model_index).toInt();
+      cisla.append(cislo);
+
+      if (cislo == 0) {
+        model().setData(model_index, cislo, Qt::DisplayRole);
+      }
     }
 
     vysledek.insert("cisla", cisla);
@@ -36,7 +42,7 @@ QVariantMap APIcko::pridejCislo(const QVariantMap &parametry)
 
     for (; r < model().rowCount(); ++r) {
       auto model_index = model().index(r, 1);
-      if (model().data(model_index).toInt() == 0) {
+      if (model().data(model_index).toString().isEmpty()) {
         model().setData(model_index, cislo, Qt::DisplayRole);
         exists = true;
         break;

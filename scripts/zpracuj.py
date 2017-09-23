@@ -7,6 +7,7 @@ registrace = open("registrace.csv", 'r')
 vysledky = open("vysledky.csv", 'r')
 
 celkove = []
+chybi = []
 for radek_vysledky in vysledky:
     vysledek = radek_vysledky.strip().split(';')
 
@@ -25,11 +26,15 @@ vysledky.close()
 
 vysledky_kategorie = {}
 
+vysledky_kategorie["pes"] = []
 for radek in celkove:
-    vysledky_kategorie[radek[8]] = []
+    vysledky_kategorie[radek[8]+radek[10]+radek[11]] = []
 
 for radek in celkove:
-    vysledky_kategorie[radek[8]].append(radek)
+    if radek[11] == "pes":
+        vysledky_kategorie["pes"].append(radek)
+    else:
+        vysledky_kategorie[radek[8]+radek[10]+radek[11]].append(radek)
 
 opts, args = getopt.getopt(sys.argv[1:], "ak", ["help", "output="])
 
@@ -45,7 +50,7 @@ for o, a in opts:
                 vysledek[5],
                 vysledek[6],
                 vysledek[7],
-                vysledek[8]
+                vysledek[8]+vysledek[10]+vysledek[11]
                 )
             )
 
@@ -65,7 +70,7 @@ for o, a in opts:
                     vysledek_kategorie[5],
                     vysledek_kategorie[6],
                     vysledek_kategorie[7],
-                    vysledek_kategorie[8]
+                    vysledek_kategorie[8] + vysledek_kategorie[10] + vysledek_kategorie[11]
                     )
                 )
                 poradi = poradi + 1

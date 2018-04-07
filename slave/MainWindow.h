@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QTime>
 #include <QStandardItemModel>
+#include <QModelIndex>
 #include "APIcko.h"
 
 namespace Ui {
@@ -27,7 +28,7 @@ private slots:
   void tik_tak();
   void on_policko_cislo_returnPressed();
   void on_tlacitko_synchronizovat_clicked();
-  void on_zmena_tabulky(const QModelIndex& topLeft, const QModelIndex& bottomRight);
+  void lalala_zmena_tabulky(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& unused);
 
 private:
   Ui::MainWindow *ui;

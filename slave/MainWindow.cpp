@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
   _model = nullptr;
   _model = new QStandardItemModel();
   connect(_model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)),
-          this, SLOT(on_zmena_tabulky(QModelIndex,QModelIndex)));
+	  this, SLOT(lalala_zmena_tabulky(QModelIndex,QModelIndex,QVector<int>)));
   ui->tabulkohled->setModel(_model);
 }
 
@@ -65,8 +65,9 @@ void MainWindow::on_tlacitko_synchronizovat_clicked()
   }
 }
 
-void MainWindow::on_zmena_tabulky(const QModelIndex& topLeft, const QModelIndex& bottomRight)
+void MainWindow::lalala_zmena_tabulky(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& unused)
 {
+  (void)unused;
   for (int r = topLeft.row(); r <= bottomRight.row(); ++r) {
     _apicko.zmenCislo(r, _model->data(_model->index(r, 0)).toInt());
   }

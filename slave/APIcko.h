@@ -2,13 +2,13 @@
 #define APICKO_H
 
 #include <QObject>
-#include <QHttpEngine/QObjectHandler>
+#include <qhttpengine/qobjecthandler.h>
 #include <QList>
 #include <QUrl>
 #include <QNetworkAccessManager>
 
 class MainWindow;
-class APIcko : public QObjectHandler
+class APIcko : public QHttpEngine::QObjectHandler
 {
   Q_OBJECT
 public:

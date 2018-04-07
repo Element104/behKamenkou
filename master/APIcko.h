@@ -2,10 +2,10 @@
 #define APICKO_H
 
 #include <QObject>
-#include <QHttpEngine/QObjectHandler>
+#include <qhttpengine/qobjecthandler.h>
 #include <QStandardItemModel>
 
-class APIcko : public QObjectHandler
+class APIcko : public QHttpEngine::QObjectHandler
 {
   Q_OBJECT
 public:

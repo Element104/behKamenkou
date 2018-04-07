@@ -5,8 +5,8 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QStandardItemModel>
-#include <QHttpEngine/QHttpServer>
-#include <QHttpEngine/QFilesystemHandler>
+#include <qhttpengine/server.h>
+#include <qhttpengine/filesystemhandler.h>
 #include <QResource>
 #include "APIcko.h"
 
@@ -44,8 +44,8 @@ private:
   QStandardItemModel *_model;
   int _posledni_casovy_index = -1;
   APIcko _apicko;
-  QFilesystemHandler _server_fshandler;
-  QHttpServer _server;
+  QHttpEngine::FilesystemHandler _server_fshandler;
+  QHttpEngine::Server _server;
   QResource _html;
 };
 

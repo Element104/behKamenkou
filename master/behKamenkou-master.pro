@@ -21,5 +21,5 @@ HEADERS  += MainWindow.h \
 
 FORMS    += MainWindow.ui
 
-LIBS += -lQHttpEngine
+LIBS += -lqhttpengine
 

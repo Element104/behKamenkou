@@ -1,4 +1,3 @@
-#include <QHttpEngine/QObjectHandler>
 #include "APIcko.h"
 #include <QDebug>
 #include <QVariantMap>

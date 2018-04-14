@@ -78,6 +78,7 @@ void MainWindow::tik_tak()
   ui->casoukazovac_celkovy->setText(cas_od_zacatku.toString("HH:mm:ss"));
   ui->casoukazovac_relativni->setText(cas_relativni.toString("HH:mm:ss"));
 
+  uloz_jako_csv();
   QFile index("index.html");
   if (index.open(QIODevice::WriteOnly)) {
     QTextStream stream(&index);

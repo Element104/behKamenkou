@@ -7,6 +7,7 @@ registrace = open("registrace.csv", 'r')
 vysledky = open("vysledky.csv", 'r')
 
 celkove = []
+casy = []
 chybi = []
 
 # radek_vysledky[0] = "Startovni cislo"
@@ -38,13 +39,14 @@ for radek_vysledky in vysledky:
 #             print(celkove[i])
             # break
 
-#     for radek_registrace in registrace:
-#         ucastnik = radek_registrace.strip().split(';')
-#         if ucastnik[0] == vysledek[2]:
-#             vysledek_ucastnik = vysledek + ucastnik
+    registrace.seek(0)
+    for radek_registrace in registrace:
+        ucastnik = radek_registrace.strip().split(';')
+        if ucastnik[0] == vysledek[2]:
+            vysledek_ucastnik = ucastnik[0:7] + [vysledek[0], vysledek[1]]
 #             print(vysledek_ucastnik)
-#             celkove.append(vysledek_ucastnik)
-#     registrace.seek(0)
+            casy.append(vysledek_ucastnik)
+    
 
 registrace.close()
 vysledky.close()
@@ -56,6 +58,7 @@ vysledky.close()
 def _poradi(vysledek):
     return vysledek[7]
 
+celkove_registrace = list(celkove)
 celkove.sort(key=_poradi)
 # print(celkove)
 
@@ -85,7 +88,6 @@ for radek in celkove:
 #     else:
 #         vysledky_kategorie[radek[8]+radek[10]+radek[11]].append(radek)
 # 
-opts, args = getopt.getopt(sys.argv[1:], "akw", ["help", "output="])
 
 # radek_vysledky[0] = "Startovni cislo"
 # radek_vysledky[1] = "Jmeno"
@@ -100,11 +102,53 @@ opts, args = getopt.getopt(sys.argv[1:], "akw", ["help", "output="])
 # celkove[7] = "Poradi"
 # celkove[8] = "Cas"
 
+opts, args = getopt.getopt(sys.argv[1:], "akwcr", ["help", "output="])
+
 for o, a in opts:
     if o == "-a":
 
         print("Poradi;Startovni cislo;Cas;Jmeno;Prijmeni;Rocnik;Kategorie")
         for vysledek in celkove:
+            print("%s;%s;%s;%s;%s;%s;%s" %
+                (vysledek[7],
+                vysledek[0],
+                vysledek[8],
+                vysledek[1],
+                vysledek[2],
+                vysledek[3],
+                vysledek[6]
+                )
+            )
+
+        print()
+        print()
+
+# Start. Číslo;Jméno;Příjmení;Ročník;Typ trasy;Muž/ženy;Kategorie;Cas;Poradi Celkem;Poradi Kategorie
+    if o == "-r":
+
+        print("Start. Číslo;Jméno;Příjmení;Ročník;Typ trasy;Muž/ženy;Kategorie;Cas;Poradi Celkem;Poradi Kategorie")
+        for vysledek in celkove_registrace:
+            print("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;" %
+                (vysledek[0],
+                 vysledek[1],
+                 vysledek[2],
+                 vysledek[3],
+                 vysledek[4],
+                 vysledek[5],
+                 vysledek[6],
+                 vysledek[8],
+                 vysledek[7],
+                 ""
+                )
+            )
+
+        print()
+        print()
+
+    if o == "-c":
+
+        print("Poradi;Startovni cislo;Cas;Jmeno;Prijmeni;Rocnik;Kategorie")
+        for vysledek in casy:
             print("%s;%s;%s;%s;%s;%s;%s" %
                 (vysledek[7],
                 vysledek[0],
@@ -146,14 +190,16 @@ for o, a in opts:
 
         for kategorie in vysledky_kategorie.keys():
             print("<a href='#%s'>Vysledky %s</a></br>" % (kategorie, kategorie))
-        print("<h2>Celkove vysledky<h2>")
+        print("<h2>Casy<h2>")
         print('<table border="1" cellpadding="5"><tr><td>Poradi</td><td>Startovni Cislo</td><td>Cas</td><td>Jmeno</td></tr>')
-        for vysledek in celkove:
+        poradi = 1
+        for vysledek in casy:
             if vysledek[7] == 0:
                 continue
             print("<tr><td>%d</td><td>%s</td><td>%s</td><td>%s</td></tr>" %
-                  (vysledek[7], vysledek[0],vysledek[8], vysledek[1] + " " + vysledek[2])
+                  (poradi, vysledek[0],vysledek[8], vysledek[1] + " " + vysledek[2])
             )
+            poradi += 1
         print("</table>")
 
         for kategorie in vysledky_kategorie.keys():

@@ -186,11 +186,34 @@ for o, a in opts:
             print()
 
     if o == "-w":
-        print('<html><meta http-equiv="refresh" content="120" charset="UTF-8"><body><h1>PREDBEZNE Vysledky 14. 4. 2018   BEZ ZARUKY</h1>')
+        print("""<html><meta charset="utf-8"><style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style><body><h1>PREDBEZNE Vysledky 06. 04. 2019   BEZ ZARUKY</h1>
+
+        | """)
 
         for kategorie in vysledky_kategorie.keys():
-            print("<a href='#%s'>Vysledky %s</a></br>" % (kategorie, kategorie))
-        print("<h2>Casy<h2>")
+            print("<a href='#%s'>%s</a> | " % (kategorie, kategorie))
+
+        print('<div class="row"><div class="column">')
+        print("<h2>Casy</h2>")
         print('<table border="1" cellpadding="5"><tr><td>Poradi</td><td>Startovni Cislo</td><td>Cas</td><td>Jmeno</td></tr>')
         poradi = 1
         for vysledek in casy:
@@ -201,9 +224,11 @@ for o, a in opts:
             )
             poradi += 1
         print("</table>")
-
+        print("""
+</div><div class="column">
+        <h2>Kategorie</h2>""")
         for kategorie in vysledky_kategorie.keys():
-            print("<h2 id='%s'>Kategorie: %s</h2>" % (kategorie, kategorie))
+            print("<h2 id='%s'>%s</h2>" % (kategorie, kategorie))
             # print("Poradi;Startovni cislo;Cas;Jmeno;Prijmeni;Rocnik;Kategorie")
             print('<table border="1" cellpadding="5"><tr><td>Poradi</td><td>Startovni Cislo</td><td>Cas</td><td>Jmeno</td></tr>')
             poradi = 1
@@ -226,5 +251,5 @@ for o, a in opts:
 
                     poradi = poradi + 1
             print("</table>")
-
+        print('</div></div> ')
         print("</body></html>")

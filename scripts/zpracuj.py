@@ -186,7 +186,7 @@ for o, a in opts:
             print()
 
     if o == "-w":
-        print("""<html><meta charset="utf-8"><style>
+        print("""<html><meta charset="utf-8" http-equiv="refresh" content="120"><style>
 * {
   box-sizing: border-box;
 }
